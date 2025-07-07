@@ -189,10 +189,40 @@
             border: 1px solid #e2e8f0;
         }
         
-        .tips h3 {
-            color: #2d3748;
-            margin-bottom: 10px;
-            font-size: 1.1em;
+        .tab-buttons {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            color: #718096;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .tab-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
         
         .tip-item {
@@ -202,6 +232,38 @@
             margin: 8px 0;
             font-size: 0.9em;
             border-left: 3px solid #667eea;
+        }
+        
+        .exercise-section {
+            margin-bottom: 20px;
+        }
+        
+        .exercise-section h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1em;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .exercise-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .exercise-name {
+            font-weight: bold;
+            color: #2d3748;
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+        
+        .exercise-desc {
+            color: #718096;
+            font-size: 0.8em;
         }
         
         .week-plan {
@@ -363,11 +425,67 @@
         </div>
         
         <div class="tips">
-            <h3>💡 継続のコツ</h3>
-            <div class="tip-item">小さく始める：週3回20分から</div>
-            <div class="tip-item">同じ時間に：毎日同じ時間帯</div>
-            <div class="tip-item">記録をつける：達成感を味わう</div>
-            <div class="tip-item">完璧を求めない：できない日があってもOK</div>
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="showTab('habits')">継続のコツ</button>
+                <button class="tab-btn" onclick="showTab('exercises')">運動方法</button>
+            </div>
+            
+            <div class="tab-content active" id="habits">
+                <div class="tip-item">小さく始める：週3回20分から</div>
+                <div class="tip-item">同じ時間に：毎日同じ時間帯</div>
+                <div class="tip-item">記録をつける：達成感を味わう</div>
+                <div class="tip-item">完璧を求めない：できない日があってもOK</div>
+            </div>
+            
+            <div class="tab-content" id="exercises">
+                <div class="exercise-section">
+                    <h4>🏠 自宅運動（器具なし）</h4>
+                    <div class="exercise-item">
+                        <div class="exercise-name">スクワット</div>
+                        <div class="exercise-desc">10回×3セット・太もも強化</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">腕立て伏せ</div>
+                        <div class="exercise-desc">5-10回×3セット・胸と腕</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">プランク</div>
+                        <div class="exercise-desc">30秒×3回・体幹強化</div>
+                    </div>
+                </div>
+                
+                <div class="exercise-section">
+                    <h4>🚶‍♂️ 有酸素運動</h4>
+                    <div class="exercise-item">
+                        <div class="exercise-name">ウォーキング</div>
+                        <div class="exercise-desc">20-30分・心拍数少し上げる</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">階段昇降</div>
+                        <div class="exercise-desc">10分・家で簡単に</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">ダンス</div>
+                        <div class="exercise-desc">好きな音楽で15分</div>
+                    </div>
+                </div>
+                
+                <div class="exercise-section">
+                    <h4>🏋️‍♀️ ジム復帰時</h4>
+                    <div class="exercise-item">
+                        <div class="exercise-name">トレッドミル</div>
+                        <div class="exercise-desc">15分・軽いジョギング</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">軽いウェイト</div>
+                        <div class="exercise-desc">以前の60%重量から開始</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">ストレッチ</div>
+                        <div class="exercise-desc">運動前後10分ずつ</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -533,6 +651,17 @@
                     });
                 }
             }
+        }
+        
+        // タブ切り替え機能
+        function showTab(tabName) {
+            // すべてのタブボタンとコンテンツを非アクティブに
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // 選択されたタブをアクティブに
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
         }
         
         // ページ読み込み時に初期化
